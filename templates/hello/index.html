@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" media="screen, projection"/>
+{% endblock extra_head %}
+
+{% block title %}Person Page{% endblock title %}
+
+{% block content %}
+    <h1 class="text-center">42 Coffee Cups Test Assignment</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <br>
+                <div>Anatolii</div>
+                <div>Soroka</div>
+                <div>1981.02.21</div>
+                <div>Bio:</div>
+                Junior Python/Django
+            </div>
+            <div class="col-md-5">
+                <div>Contacts</div>
+                <div>Email: sorokaanatolii@gmail.com</div>
+                <div>Jabber: a-soroka@khavr.com</div>
+                <div>Skype: s-sorael</div>
+                <div>Other contacts:</div>
+                Mobile phone: +380684021358
+            </div>
+        </div>
+    </div>
+{% endblock content %}
