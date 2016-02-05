@@ -1,0 +1,34 @@
+[
+    {
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": true,
+        "is_staff": true,
+        "last_login": "2015-11-30T12:00:00.276Z",
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$OwMmZx9T1x5k$0mues1MEHqWj4av0aOgpULUZpoWfywzu3yV20/nJEAM=",
+        "email": "admin@admin.ua",
+        "date_joined": "2014-09-11T11:00:00.276Z"
+        }
+    },
+  {
+    "model": "hello.Person",
+    "pk": 1,
+    "fields": {
+      "first_name": "Anatolii",
+      "last_name": "Soroka",
+      "date_of_birth": "1981-02-21",
+      "bio": "Junior Python/Django",
+      "email": "sorokaanatolii@gmail.com",
+      "jabber": "a-soroka@khavr.com",
+      "skype": "s-sorael",
+      "other": "Mobile phone: +380684021358"
+    }
+  }
+]

@@ -8,25 +8,29 @@
 {% block title %}Person Page{% endblock title %}
 
 {% block content %}
-    <h1 class="text-center">42 Coffee Cups Test Assignment</h1>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-5">
-                <br>
-                <div>{{ contact.first_name }}</div>
-                <div>{{ contact.last_name }}</div>
-                <div>{{ contact.date_of_birth }}</div>
-                <div>Bio:</div>
-                {{ contact.bio|linebreaks }}
-            </div>
-            <div class="col-md-5">
-                <div>Contacts</div>
-                <div>Email: {{ contact.email }}</div>
-                <div>Jabber: {{ contact.jabber }}</div>
-                <div>Skype: {{ contact.skype }}</div>
-                <div>Other contacts:</div>
-                {{ contact.other|linebreaks }}
+    {% if contact %}
+        <h1 class="text-center">42 Coffee Cups Test Assignment</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <br>
+                    <div>{{ contact.first_name }}</div>
+                    <div>{{ contact.last_name }}</div>
+                    <div>{{ contact.date_of_birth }}</div>
+                    <div>Bio:</div>
+                    {{ contact.bio|linebreaks }}
+                </div>
+                <div class="col-md-5">
+                    <div>Contacts</div>
+                    <div>Email: {{ contact.email }}</div>
+                    <div>Jabber: {{ contact.jabber }}</div>
+                    <div>Skype: {{ contact.skype }}</div>
+                    <div>Other contacts:</div>
+                    {{ contact.other|linebreaks }}
+                </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <h1 class="text-center">Database is empty!</h1>
+    {% endif %}
 {% endblock content %}
