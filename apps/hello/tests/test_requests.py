@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from factories import RequestFactory
@@ -55,6 +56,40 @@ class RequestViewTests(TestCase):
         req_from_db = [r.as_dict() for r in Request.objects.all()[:10]]
         response = self.client.get(reverse('requests'))
         self.assertListEqual(req_from_db, response.context['requests'])
+
+    def test_is_ajax_return_len_json(self):
+        """
+        is ajax return len json
+        """
+        for i in range(3):
+            RequestFactory(file_path='/')
+            RequestFactory(file_path='/requests/')
+        response = self.client.get(
+            reverse('requests_count'),
+            {"id": "1"},
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        json_response = json.loads(response.content)
+        self.assertTrue(isinstance(json_response, dict))
+        self.assertEqual(json_response['len'], 6)
+
+    def test_is_ajax_return_object_json(self):
+        """
+        is ajax return object json
+        """
+        for i in range(3):
+            RequestFactory(file_path='/')
+            RequestFactory(file_path='/requests/')
+        response = self.client.get(
+            reverse('requests'), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        json_response = json.loads(response.content)
+        self.assertTrue(isinstance(json_response, dict))
+        self.assertEqual(json_response['requests'][0]['status'], '200')
+        self.assertEqual(
+            json_response['requests'][0]['ver_protocol'], 'HTTP/1.1')
+        self.assertEqual(json_response['requests'][0]['method'], 'GET')
+        self.assertEqual(json_response['requests'][0]['content'], '1000')
+        self.assertEqual(
+            json_response['requests'][0]['file_path'], '/requests/')
 
 
 class RequestMiddlewareTests(TestCase):
