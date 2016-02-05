@@ -13,19 +13,19 @@
         <div class="row">
             <div class="col-md-5">
                 <br>
-                <div>Anatolii</div>
-                <div>Soroka</div>
-                <div>1981.02.21</div>
+                <div>{{ contact.first_name }}</div>
+                <div>{{ contact.last_name }}</div>
+                <div>{{ contact.date_of_birth }}</div>
                 <div>Bio:</div>
-                Junior Python/Django
+                {{ contact.bio|linebreaks }}
             </div>
             <div class="col-md-5">
                 <div>Contacts</div>
-                <div>Email: sorokaanatolii@gmail.com</div>
-                <div>Jabber: a-soroka@khavr.com</div>
-                <div>Skype: s-sorael</div>
+                <div>Email: {{ contact.email }}</div>
+                <div>Jabber: {{ contact.jabber }}</div>
+                <div>Skype: {{ contact.skype }}</div>
                 <div>Other contacts:</div>
-                Mobile phone: +380684021358
+                {{ contact.other|linebreaks }}
             </div>
         </div>
     </div>
