@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from apps.hello.models import Person
+from apps.hello.models import Person, Request
 
 
 def view_contact(request):
@@ -9,10 +9,7 @@ def view_contact(request):
 
 
 def view_requests(request):
-    requests = [{'date_time': '2016-02-05 10:02:43',
-                 'method': 'GET',
-                 'file_path': '/',
-                 'ver_protocol': 'HTTP/1.1',
-                 'status': '200',
-                 'content': '1508'}]
-    return render(request, 'hello/requests.html', {'requests': requests * 10})
+    requests = Request.objects.all()[:10]
+    req_json = [r.as_dict() for r in requests]
+    response_data = {'requests': req_json}
+    return render(request, 'hello/requests.html', response_data)
