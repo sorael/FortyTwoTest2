@@ -31,3 +31,12 @@
         <h1 class="text-center">Database is empty!</h1>
     {% endif %}
 {% endblock content %}
+
+{% block tail %}
+    <div class="container">
+        <hr>
+        <div>
+            <a href="{% url 'requests' %}">Requests</a>
+        </div>
+    </div>
+{% endblock tail %}

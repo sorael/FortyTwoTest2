@@ -19,95 +19,17 @@
                 </tr>
             </thead>
             <tbody>
+                {% for request in requests %}
                 <tr>
-                    <td>1</td>
-                    <td>2016-02-05 10:02:43</td>
-                    <td>GET</td>
-                    <td>/</td>
-                    <td>HTTP/1.1</td>
-                    <td>200</td>
-                    <td>1508</td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ request.date_time }}</td>
+                    <td>{{ request.method }}</td>
+                    <td>{{ request.file_path }}</td>
+                    <td>{{ request.ver_protocol }}</td>
+                    <td>{{ request.status }}</td>
+                    <td>{{ request.content }}</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2016-02-05 10:02:43</td>
-                    <td>GET</td>
-                    <td>/</td>
-                    <td>HTTP/1.1</td>
-                    <td>200</td>
-                    <td>1508</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>2016-02-05 10:02:43</td>
-                    <td>GET</td>
-                    <td>/</td>
-                    <td>HTTP/1.1</td>
-                    <td>200</td>
-                    <td>1508</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>2016-02-05 10:02:43</td>
-                    <td>GET</td>
-                    <td>/</td>
-                    <td>HTTP/1.1</td>
-                    <td>200</td>
-                    <td>1508</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>2016-02-05 10:02:43</td>
-                    <td>GET</td>
-                    <td>/</td>
-                    <td>HTTP/1.1</td>
-                    <td>200</td>
-                    <td>1508</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>2016-02-05 10:02:43</td>
-                    <td>GET</td>
-                    <td>/</td>
-                    <td>HTTP/1.1</td>
-                    <td>200</td>
-                    <td>1508</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>2016-02-05 10:02:43</td>
-                    <td>GET</td>
-                    <td>/</td>
-                    <td>HTTP/1.1</td>
-                    <td>200</td>
-                    <td>1508</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>2016-02-05 10:02:43</td>
-                    <td>GET</td>
-                    <td>/</td>
-                    <td>HTTP/1.1</td>
-                    <td>200</td>
-                    <td>1508</td>
-                </tr><tr>
-                    <td>9</td>
-                    <td>2016-02-05 10:02:43</td>
-                    <td>GET</td>
-                    <td>/</td>
-                    <td>HTTP/1.1</td>
-                    <td>200</td>
-                    <td>1508</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>2016-02-05 10:02:43</td>
-                    <td>GET</td>
-                    <td>/</td>
-                    <td>HTTP/1.1</td>
-                    <td>200</td>
-                    <td>1508</td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
