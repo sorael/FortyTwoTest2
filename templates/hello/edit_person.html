@@ -14,16 +14,16 @@
                         <div class="field">
                             <p>
                                 <label for="id_first_name">First name:</label>
-                                <input class="form-control" id="id_first_name" name="first_name" value="Anatolii" type="text">
+                                <input class="form-control" id="id_first_name" name="first_name" value="{{ contact.first_name }}" type="text">
                             </p>
                             <p>
                                 <label for="id_last_name">Last name:</label>
-                                <input class="form-control" id="id_last_name" name="last_name" value="Soroka" type="text">
+                                <input class="form-control" id="id_last_name" name="last_name" value="{{ contact.last_name }}" type="text">
                             </p>
 
                             <p>
                                 <label for="id_date_of_birth">Date of birth:</label>
-                                <input class="form-control" id="id_date_of_birth" name="date_of_birth" value="1981-02-21" type="text">
+                                <input class="form-control" id="id_date_of_birth" name="date_of_birth" value="{{ contact.date_of_birth }}" type="text">
                             </p>
                             <p>
                                 <label for="id_photo">Photo:</label>
@@ -39,27 +39,27 @@
                         <div class="field">
                            <p>
                                 <label for="id_email">Email:</label>
-                                <input class="form-control" id="id_email" maxlength="75" name="email" type="text" value="sorokaanatolii@gmail.com" />
+                                <input class="form-control" id="id_email" maxlength="75" name="email" type="text" value="{{ contact.email }}" />
                             </p>
                             <p>
 
                                 <label for="id_jabber">Jabber:</label>
-                                <input class="form-control" id="id_jabber" maxlength="75" name="jabber" type="text" value="a-soroka@khavr.com" />
+                                <input class="form-control" id="id_jabber" maxlength="75" name="jabber" type="text" value="{{ contact.jabber }}" />
                             </p>
                             <p>
 
                                 <label for="id_skype">Skype:</label>
-                                <input class="form-control" id="id_skype" maxlength="250" name="skype" type="text" value="s-sorael" />
+                                <input class="form-control" id="id_skype" maxlength="250" name="skype" type="text" value="{{ contact.skype }}" />
                             </p>
                         </div>
                     </div>
                     <p>
                         <label for="id_other">Other contacts:</label>
-                        <textarea class="form-control" cols="40" id="id_other" name="other" rows="3">Mobile phone: +380684021358</textarea>
+                        <textarea class="form-control" cols="40" id="id_other" name="other" rows="3">{{ contact.other }}</textarea>
                     </p>
                     <p>
                         <label for="id_bio">Bio:</label>
-                        <textarea class="form-control" cols="40" id="id_bio" name="bio" rows="3">Junior Python/Django</textarea>
+                        <textarea class="form-control" cols="40" id="id_bio" name="bio" rows="3">{{ contact.bio }}</textarea>
                     </p>
                 </div>
             </div>

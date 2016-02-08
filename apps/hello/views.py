@@ -30,4 +30,14 @@ def view_requests(request):
 
 
 def edit_person(request):
-    return render(request, 'hello/edit_person.html')
+    contact = {
+        'first_name': 'Anatolii',
+        'last_name': 'Soroka',
+        'date_of_birth': '1981-02-21',
+        'bio': 'Junior Python/Django',
+        'email': 'sorokaanatolii@gmail.com',
+        'jabber': 'a-soroka@khavr.com',
+        'skype': 's-sorael',
+        'other': 'Mobile phone: +380684021358'
+    }
+    return render(request, 'hello/edit_person.html', {'contact': contact})
