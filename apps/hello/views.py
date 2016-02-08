@@ -27,3 +27,7 @@ def view_requests(request):
         return HttpResponse(json.dumps(response_data),
                             content_type="application/json")
     return render(request, 'hello/requests.html', response_data)
+
+
+def edit_person(request):
+    return render(request, 'hello/edit_person.html')

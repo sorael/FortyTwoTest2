@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 
-{% block title %}Person Page{% endblock title %}
+{% block title %}Person page{% endblock title %}
 
 {% block content %}
     {% if contact %}
@@ -14,8 +14,12 @@
                     <div>{{ contact.first_name }}</div>
                     <div>{{ contact.last_name }}</div>
                     <div>{{ contact.date_of_birth }}</div>
-                    <div>Bio:</div>
-                    {{ contact.bio|linebreaks }}
+                    <div>Photo:</div>
+                    {% if contact.photo %}
+                        <img src="{{ contact.photo.url }}" />
+                    {% else %}
+                        <img src="{% static 'img/img.png' %}" />
+                    {% endif %}
                 </div>
                 <div class="col-md-5">
                     <div>Contacts</div>
@@ -24,6 +28,11 @@
                     <div>Skype: {{ contact.skype }}</div>
                     <div>Other contacts:</div>
                     {{ contact.other|linebreaks }}
+                    <div>Bio:</div>
+                    {{ contact.bio|linebreaks }}
+                </div>
+                <div class="col-md-2">
+                    <a href="{% url 'edit_person' %}">Edit</a>
                 </div>
             </div>
         </div>
