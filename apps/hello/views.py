@@ -2,6 +2,7 @@
 import json
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from apps.hello.models import Person, Request
 from apps.hello.edit_form import PersonEditForm
 
@@ -30,24 +31,27 @@ def view_requests(request):
     return render(request, 'hello/requests.html', response_data)
 
 
+@login_required
 def edit_person(request):
     contact = Person.objects.first()
     form = PersonEditForm(instance=contact)
-    if request.POST:
+    if request.POST and request.is_ajax():
         form = PersonEditForm(request.POST, request.FILES, instance=contact)
         response = {}
         if form.is_valid():
             contact = form.save(commit=False)
             contact.save()
             response['photo'] = str(contact.photo)
+            response['success'] = 'true'
         else:
-            errs = {}
-            for error in form.errors:
-                e = form.errors[error]
-                errs[error] = unicode(e)
-            response['success'] = 'false'
-            response['errors'] = errs
-        return render(request, 'hello/edit_person.html',
-                      {'response': response, 'form': form})
+            if form.errors:
+                errs = {}
+                for error in form.errors:
+                    e = form.errors[error]
+                    errs[error] = unicode(e)
+                response['success'] = 'false'
+                response['errors'] = errs
+        return HttpResponse(json.dumps(response),
+                            content_type='application/json')
     return render(request, 'hello/edit_person.html',
                   {'form': form, 'contact': contact})

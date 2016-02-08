@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from apps.hello.models import Person
+from apps.hello.widgets import DatePickerWidget
 
 
 class PersonEditForm(forms.ModelForm):
@@ -12,7 +13,9 @@ class PersonEditForm(forms.ModelForm):
             "last_name": forms.TextInput(attrs={'class': 'form-control'}),
             "bio": forms.Textarea(attrs={'class': 'form-control',
                                          'rows': '3'}),
-            "date_of_birth": forms.DateInput(attrs={'class': 'form-control'}),
+            "date_of_birth": DatePickerWidget(
+                attrs={'class': 'form-control datepicker-here',
+                       'readonly': 'readonly'}),
             "email": forms.TextInput(attrs={'class': 'form-control'}),
             "jabber": forms.TextInput(attrs={'class': 'form-control'}),
             "skype": forms.TextInput(attrs={'class': 'form-control'}),

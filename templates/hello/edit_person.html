@@ -3,8 +3,15 @@
 
 {% block title %}Edit person page{% endblock %}
 
+{% block extra_head %}
+    <script type="text/javascript" src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.form.min.js' %}"></script>
+    {{ form.media }}
+{% endblock extra_head %}
+
 {% block content %}
     <h1 class="text-center">42 Coffee Cups Test Assignment</h1>
+    {% if user.is_authenticated %}
     <div class="container">
         <form action="{% url 'edit_person' %}" method="post" enctype="multipart/form-data" id="editform">
             {% csrf_token %}
@@ -74,9 +81,21 @@
                 </div>
             </div>
             <br>
+            <div id="loading">
+                <img src="{% static 'img/loading.gif' %}">
+            </div>
+            <div id="form_ajax">
+                <span>Changes have been saved.</span>
+            </div>
+            <div id="form_ajax_error">
+                <span>Can not submit data due to errors.</span>
+            </div>
             <input type="submit" value="Save" class="btn btn-primary" id="sendbutton"/>
             <input type="hidden" name="next" value="/" />
             <a id="index" href="{% url 'index' %}">Cancel</a>
         </form>
     </div>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
 {% endblock %}
