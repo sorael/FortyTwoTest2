@@ -95,6 +95,7 @@ class EditPersonFormTests(TestCase):
         form.save()
         person = Person.objects.first()
         self.assertLessEqual(person.photo.width/person.photo.height, 500/250)
+        self.assertTrue(person.photo.width and person.photo.height <= 200)
 
 
 class EditPersonViewTests(TestCase):
@@ -148,10 +149,11 @@ class EditPersonViewTests(TestCase):
         """
         is person data update with ajax invalid form data
         """
+        person_before = Person.objects.first()
         self.client.login(username='admin', password='admin')
         fields_data = {'first_name': '',
                        'last_name': 'last_name',
-                       'birth_date': datetime.date(1010, 10, 10),
+                       'date_of_birth': datetime.date(1010, 10, 10),
                        'email': 'email@email.com',
                        'jabber': 'jabber@jabber.com',
                        'skype': 'skype',
@@ -162,11 +164,15 @@ class EditPersonViewTests(TestCase):
             reverse('edit_person'),
             fields_data,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        person_after = Person.objects.first()
         self.assertEqual(resp.status_code, 200)
         content_resp = json.loads(resp.content)
         self.assertEqual(content_resp['success'], 'false')
         self.assertIn('This field is required.',
                       content_resp['errors']['first_name'])
+        for field in fields_data:
+            self.assertEqual(getattr(person_after, field),
+                             getattr(person_before, field))
 
     def test_default_image_in_contact_edit_page(self):
         """
