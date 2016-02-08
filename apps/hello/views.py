@@ -3,6 +3,7 @@ import json
 from django.shortcuts import render
 from django.http import HttpResponse
 from apps.hello.models import Person, Request
+from apps.hello.edit_form import PersonEditForm
 
 
 def view_contact(request):
@@ -30,14 +31,23 @@ def view_requests(request):
 
 
 def edit_person(request):
-    contact = {
-        'first_name': 'Anatolii',
-        'last_name': 'Soroka',
-        'date_of_birth': '1981-02-21',
-        'bio': 'Junior Python/Django',
-        'email': 'sorokaanatolii@gmail.com',
-        'jabber': 'a-soroka@khavr.com',
-        'skype': 's-sorael',
-        'other': 'Mobile phone: +380684021358'
-    }
-    return render(request, 'hello/edit_person.html', {'contact': contact})
+    contact = Person.objects.first()
+    form = PersonEditForm(instance=contact)
+    if request.POST:
+        form = PersonEditForm(request.POST, request.FILES, instance=contact)
+        response = {}
+        if form.is_valid():
+            contact = form.save(commit=False)
+            contact.save()
+            response['photo'] = str(contact.photo)
+        else:
+            errs = {}
+            for error in form.errors:
+                e = form.errors[error]
+                errs[error] = unicode(e)
+            response['success'] = 'false'
+            response['errors'] = errs
+        return render(request, 'hello/edit_person.html',
+                      {'response': response, 'form': form})
+    return render(request, 'hello/edit_person.html',
+                  {'form': form, 'contact': contact})

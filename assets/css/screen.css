@@ -2,3 +2,8 @@
     background-color: #000000;
     height: 2px;
 }
+
+ #form_ajax_error, .errorlist > li{
+    color: red;
+    list-style: none;
+}

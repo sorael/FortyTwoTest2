@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from PIL import Image
 
 
 class Person(models.Model):
@@ -11,6 +12,14 @@ class Person(models.Model):
     jabber = models.EmailField()
     skype = models.CharField(max_length=250)
     other = models.TextField()
+    photo = models.ImageField(upload_to='photos', blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        super(Person, self).save(*args, **kwargs)
+        if self.photo:
+            image = Image.open(self.photo)
+            image.thumbnail((200, 200), Image.ANTIALIAS)
+            image.save(self.photo.path, 'JPEG', quality=80)
 
 
 class Request(models.Model):
