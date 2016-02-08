@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, url
 from django.contrib.auth import views
-from django.views.generic import RedirectView
 
 
 urlpatterns = patterns(
@@ -11,6 +10,6 @@ urlpatterns = patterns(
     url(r'^requests_count/', 'apps.hello.views.requests_count',
         name='requests_count'),
     url(r'^login/', views.login, name='login'),
-    url(r'^accounts/profile/$', RedirectView.as_view(url='/')),
+    url(r'^logout/', views.logout, {'next_page': '/'}, name='logout'),
     url(r'^edit_person/', 'apps.hello.views.edit_person', name='edit_person'),
 )

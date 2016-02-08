@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from apps.hello.models import Person, Request
-from apps.hello.edit_form import PersonEditForm
+from apps.hello.forms import PersonEditForm
 
 
 def view_contact(request):

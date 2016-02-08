@@ -7,7 +7,7 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
 from apps.hello.models import Person
-from apps.hello.edit_form import PersonEditForm
+from apps.hello.forms import PersonEditForm
 
 
 def create_img():
