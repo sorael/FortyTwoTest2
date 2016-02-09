@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
-import os
-import subprocess
 from io import BytesIO
-from datetime import datetime
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.template import Template, Context
 from django.db.models import get_models
 from django.core.management import call_command
-from django.conf import settings
 from apps.hello.models import Person
 
 
@@ -57,20 +53,3 @@ class CommandOutputTests(TestCase):
                    (model.__name__, model.objects.count())
             self.assertIn('error: ' + out_, err)
             self.assertIn(out_, out)
-
-    def test_file_stderr_save(self):
-        """
-        is bash script works and saves all stderr output
-        in file with current date name
-        """
-        script_file = settings.BASE_DIR + "/err_to_file.sh"
-        os.chmod(script_file, 0555)
-        subprocess.call(script_file)
-        file_name = '%s-0%s-0%s.dat' % (datetime.now().year,
-                                        datetime.now().month,
-                                        datetime.now().day)
-        file_path = settings.BASE_DIR + '/' + file_name
-        f = open(file_path, 'r')
-        for line in f.readlines():
-            self.assertIn('error:', ' '.join(line.split()))
-        f.close()
