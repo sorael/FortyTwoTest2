@@ -70,6 +70,7 @@ class CommandOutputTests(TestCase):
                                         datetime.now().month,
                                         datetime.now().day)
         file_path = settings.BASE_DIR + '/' + file_name
-        with open(file_path, 'r') as f:
-            for line in f:
-                self.assertIn('error:', ' '.join(line.split()))
+        f = open(file_path, 'r')
+        for line in f.readlines():
+            self.assertIn('error:', ' '.join(line.split()))
+        f.close()
