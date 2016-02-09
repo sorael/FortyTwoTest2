@@ -42,3 +42,9 @@ class Request(models.Model):
 
     class Meta:
         ordering = ['-date_time']
+
+
+class LoggingOperation(models.Model):
+    model_name = models.CharField(max_length=100)
+    operation_type = models.CharField(max_length=6)
+    operation_date = models.DateTimeField(auto_now_add=True)
