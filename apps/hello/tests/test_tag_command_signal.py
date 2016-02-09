@@ -26,7 +26,7 @@ class EditLinkTagTests(TestCase):
 
     def test_tag_template(self):
         """
-        is tag with right parameters render right string
+        is tag with valid parameter render right string
         """
         html = '{% load edit_link %}{% edit_link obj %}'
         person = Person.objects.first()
