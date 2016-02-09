@@ -72,4 +72,4 @@ class CommandOutputTests(TestCase):
         file_path = settings.BASE_DIR + '/' + file_name
         with open(file_path, 'r') as f:
             for line in f:
-                self.assertIn('error:', line)
+                self.assertIn('error:', ' '.join(line.split()))
