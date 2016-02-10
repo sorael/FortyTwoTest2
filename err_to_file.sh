@@ -2,6 +2,5 @@
 
 DATE=$(date +'%Y-%m-%d')
 
-chmod go+w .
+chmod 770 .
 python manage.py view_models 2> ${DATE}.dat
-chmod 700 .

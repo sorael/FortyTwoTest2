@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
-import subprocess
 from io import BytesIO
 from datetime import datetime
 from django.test import TestCase
@@ -28,15 +26,14 @@ class CommandOutputTests(TestCase):
 
     def test_file_stderr_save(self):
         """
-
+        is stderr output saves in file with name current date
         """
-        script_file = settings.BASE_DIR + "/err_to_file.sh"
-        os.chmod(script_file, 0555)
-        subprocess.call(script_file)
         file_name = '%s-0%s-%s.dat' % (datetime.now().year,
                                        datetime.now().month,
                                        datetime.now().day)
         file_path = settings.BASE_DIR + '/' + file_name
+        with open(file_name, 'w') as err:
+            call_command('view_models', stderr=err)
         with open(file_path, 'r') as f:
             for line in f:
-                print ' '.join(line.split())
+                self.assertTrue(line.startswith('error:'))
