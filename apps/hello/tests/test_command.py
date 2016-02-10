@@ -29,7 +29,6 @@ class CommandOutputTests(TestCase):
     def test_file_stderr_save(self):
         """
 
-        :return:
         """
         script_file = settings.BASE_DIR + "/err_to_file.sh"
         os.chmod(script_file, 0555)
