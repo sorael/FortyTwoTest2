@@ -8,15 +8,15 @@ from apps.hello.models import LoggingOperation
 def save_signal(sender, created, **kwargs):
     if sender.__name__ == 'LoggingOperation':
         return
-    operation_types = ['create', 'update']
+    operation_type = 'create' if created else 'update'
     if created:
         LoggingOperation.objects.create(
             model_name=sender.__name__,
-            operation_type=operation_types[0])
+            operation_type=operation_type)
     else:
         LoggingOperation.objects.create(
             model_name=sender.__name__,
-            operation_type=operation_types[1])
+            operation_type=operation_type)
 
 
 @receiver(post_delete)

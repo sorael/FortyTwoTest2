@@ -3,13 +3,7 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.template import Template, Context
 from apps.hello.models import Person
-
-
-def get_edit_link():
-    person = Person.objects.first()
-    return reverse('admin:%s_%s_change' % (person._meta.app_label,
-                                           person._meta.module_name),
-                   args=(person.id,))
+from apps.hello.templatetags.edit_link import edit_link
 
 
 class EditLinkTagTests(TestCase):
@@ -18,11 +12,12 @@ class EditLinkTagTests(TestCase):
         """
         is edit link presence in index page
         """
+        person = Person.objects.first()
         response = self.client.get(reverse('index'))
-        self.assertNotContains(response, get_edit_link())
+        self.assertNotContains(response, edit_link(person))
         self.client.login(username='admin', password='admin')
         response = self.client.get(reverse('index'))
-        self.assertContains(response, get_edit_link(), 1)
+        self.assertContains(response, edit_link(person), 1)
 
     def test_tag_template(self):
         """
@@ -31,4 +26,10 @@ class EditLinkTagTests(TestCase):
         html = '{% load edit_link %}{% edit_link obj %}'
         person = Person.objects.first()
         template = Template(html).render(Context({'obj': person}))
-        self.assertEqual(template, get_edit_link())
+        self.assertEqual(template, edit_link(person))
+
+    def test_invalid_object(self):
+        """
+        is exception generate if edit_link takes invalid object
+        """
+        self.assertRaises(Exception, edit_link, 'str')

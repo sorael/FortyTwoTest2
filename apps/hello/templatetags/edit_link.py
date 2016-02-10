@@ -7,8 +7,11 @@ register = template.Library()
 
 
 def edit_link(obj):
-    return urlresolvers.reverse("admin:%s_%s_change" %
-                                (obj._meta.app_label, obj._meta.module_name),
-                                args=(obj.id,))
+    try:
+        link = 'admin:%s_%s_change' % (obj._meta.app_label,
+                                       obj._meta.module_name)
+    except AttributeError:
+        raise Exception("edit_link tag expected an object of model")
+    return urlresolvers.reverse(link, args=(obj.id,))
 
 register.simple_tag(edit_link)

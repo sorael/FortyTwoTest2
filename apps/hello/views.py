@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from apps.hello.models import Person, Request
 from apps.hello.forms import PersonEditForm
+import apps.hello.signals  # noqa
 
 
 def view_contact(request):
