@@ -19,3 +19,7 @@
 #form_ajax_error{
     display: none;
 }
+
+input.priority{
+   width: 40px;
+}
