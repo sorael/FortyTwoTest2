@@ -24,6 +24,8 @@ $(document).ready(function () {
                     row.append($('<td>').text(request.ver_protocol));
                     row.append($('<td>').text(request.status));
                     row.append($('<td>').text(request.content));
+                    row.append($('<td>').html('<input class="priority" type="number" min="1" max="3" id="p'
+                        + request.id + '"' + ' value="1" />'));
                     tbody.append(row);
                 });
             }
