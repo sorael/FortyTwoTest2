@@ -80,7 +80,9 @@ class RequestViewTests(TestCase):
             RequestFactory(file_path='/')
             RequestFactory(file_path='/requests/')
         response = self.client.get(
-            reverse('requests'), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+            reverse('priority_requests'),
+            data={'priority': '1', 'sort': '-date_time'},
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         json_response = json.loads(response.content)
         self.assertTrue(isinstance(json_response, dict))
         self.assertEqual(json_response['requests'][0]['status'], '200')
