@@ -1,4 +1,17 @@
 $(document).ready(function () {
+
+    $('#sort').click(function () {
+        if ($(this).attr('class') == "fa fa-angle-down") {
+            $(this).removeClass("fa fa-angle-down");
+            $(this).addClass("fa fa-angle-up");
+            $(this).attr('title', '-date_time');
+        } else {
+            $(this).removeClass("fa fa-angle-up");
+            $(this).addClass("fa fa-angle-down");
+            $(this).attr('title', 'date_time');
+        }
+    });
+
     var defaultTitle = "Requests";
     var isActive;
 
@@ -9,9 +22,25 @@ $(document).ready(function () {
       isActive = false;
     };
 
+    function changePriority(el){
+        var priority = $(el).val();
+        var request_id = $(el).attr('id').slice(1);
+        $.ajax({
+            url: '/change_priority/',
+            data: {'priority': priority, 'request_id': request_id},
+            success: function(data) {
+                if(data.success == 'false') {
+                    alert('Please use arrow up and down to change the "priority"');
+                }
+            }
+        });
+    }
+
     function isHover(){
         $.ajax({
-            url: "/requests/",
+            url: "/priority_requests/",
+            data: {'priority': $('.active').attr('id'),
+            'sort': $('#sort').attr('title')},
             success: function(data) {
                 $("title").text(defaultTitle);
                 var tbody = $('tbody').html('');
@@ -25,8 +54,11 @@ $(document).ready(function () {
                     row.append($('<td>').text(request.status));
                     row.append($('<td>').text(request.content));
                     row.append($('<td>').html('<input class="priority" type="number" min="1" max="3" id="p'
-                        + request.id + '"' + ' value="1" />'));
+                        + request.id + '"' + ' value="' + request.priority + '" />'));
                     tbody.append(row);
+                });
+                $('.priority').change(function () {
+                    changePriority(this);
                 });
             }
         });

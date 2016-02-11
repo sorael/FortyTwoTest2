@@ -3,19 +3,36 @@
 {% load staticfiles %}
 
 {% block extra_head %}
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <script type="text/javascript" src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/req_ajax.js' %}"></script>
 {% endblock extra_head %}
 
 {% block title %}Requests{% endblock %}
 {% block content %}
     <h1 class="text-center">Requests</h1>
+    <br>
     <div class="container">
+        <div class="row">
+            <ul class="nav nav-tabs">
+                <li id="r1" class=""><a aria-expanded="true" href="#11" data-toggle="tab">1</a></li>
+                <li id="r2" class=""><a aria-expanded="false" href="#22" data-toggle="tab">2</a></li>
+                <li id="r3" class=""><a aria-expanded="false" href="#33" data-toggle="tab">3</a></li>
+                <li id="all" class="active"><a aria-expanded="false" href="#all_r" data-toggle="tab">All</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade" id="11"></div>
+                <div class="tab-pane fade" id="22"></div>
+                <div class="tab-pane fade" id="33"></div>
+                <div class="tab-pane fade active in" id="all_r"></div>
+            </div>
+        </div>
         <table class="table">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Date & Time</th>
+                    <th>Date & Time <a id="sort" title="-date_time" class="fa fa-angle-up" href="#"></a></th>
                     <th>HTTP method</th>
                     <th>File path</th>
                     <th>Protocol version</th>
@@ -36,7 +53,7 @@
                     <td>{{ request.content }}</td>
                     <td><input class="priority"  type="number" min="1" max="3"
                                id="p{{ request.id }}"
-                               value="1"/></td>
+                               value="{{ request.priority }}"/></td>
                 </tr>
                 {% endfor %}
             </tbody>
