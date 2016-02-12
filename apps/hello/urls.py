@@ -6,7 +6,7 @@ from django.contrib.auth import views
 urlpatterns = patterns(
     '',
     url(r'^$', 'apps.hello.views.view_contact', name='index'),
-    url(r'^requests/', 'apps.hello.views.view_requests', name='requests'),
+    url(r'^requests/', 'apps.hello.views.priority_requests', name='requests'),
     url(r'^requests_count/', 'apps.hello.views.requests_count',
         name='requests_count'),
     url(r'^priority_requests/', 'apps.hello.views.priority_requests',

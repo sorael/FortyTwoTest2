@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    var defaultTitle = "Requests";
+    var isActive = true;
+
     $('#sort').click(function () {
         if ($(this).attr('class') == "fa fa-angle-down") {
             $(this).removeClass("fa fa-angle-down");
@@ -11,9 +14,6 @@ $(document).ready(function () {
             $(this).attr('title', 'date_time');
         }
     });
-
-    var defaultTitle = "Requests";
-    var isActive;
 
     window.onfocus = function () {
       isActive = true;
@@ -29,8 +29,10 @@ $(document).ready(function () {
             url: '/change_priority/',
             data: {'priority': priority, 'request_id': request_id},
             success: function(data) {
-                if(data.success == 'false') {
-                    alert('Please use arrow up and down to change the "priority"');
+                if(data.success == 'true') {
+                    alert("Request priority was changed.");
+                } else if (data.success == 'false') {
+                    alert("Request priority wasn't changed.");
                 }
             }
         });
@@ -42,24 +44,28 @@ $(document).ready(function () {
             data: {'priority': $('.active').attr('id'),
             'sort': $('#sort').attr('title')},
             success: function(data) {
-                $("title").text(defaultTitle);
-                var tbody = $('tbody').html('');
-                data.requests.forEach(function (request, i) {
-                    var row = $('<tr id="'+ request.id +'">');
-                    row.append($('<td>').text(i + 1));
-                    row.append($('<td>').text(request.date_time));
-                    row.append($('<td>').text(request.method));
-                    row.append($('<td>').text(request.file_path));
-                    row.append($('<td>').text(request.ver_protocol));
-                    row.append($('<td>').text(request.status));
-                    row.append($('<td>').text(request.content));
-                    row.append($('<td>').html('<input class="priority" type="number" min="1" max="3" id="p'
-                        + request.id + '"' + ' value="' + request.priority + '" />'));
-                    tbody.append(row);
-                });
-                $('.priority').change(function () {
-                    changePriority(this);
-                });
+                if (data.success == 'false') {
+                    alert("Something happening. Please, reload the page.");
+                } else if (data.success == 'true') {
+                    $("title").text(defaultTitle);
+                    var tbody = $('tbody').html('');
+                    data.requests.forEach(function (request, i) {
+                        var row = $('<tr id="'+ request.id +'">');
+                        row.append($('<td>').text(i + 1));
+                        row.append($('<td>').text(request.date_time));
+                        row.append($('<td>').text(request.method));
+                        row.append($('<td>').text(request.file_path));
+                        row.append($('<td>').text(request.ver_protocol));
+                        row.append($('<td>').text(request.status));
+                        row.append($('<td>').text(request.content));
+                        row.append($('<td>').html('<input class="priority" type="number" min="1" max="3" id="p'
+                            + request.id + '"' + ' value="' + request.priority + '" />'));
+                        tbody.append(row);
+                    });
+                    $('.priority').change(function () {
+                        changePriority(this);
+                    });
+                }
             }
         });
     }
@@ -74,5 +80,5 @@ $(document).ready(function () {
         });
     }
 
-    setInterval(function (){(isActive) ? isHover() : loadCount();}, 2000);
+    setInterval(function (){(isActive) ? isHover() : loadCount();}, 1500);
 });

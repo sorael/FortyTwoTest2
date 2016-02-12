@@ -21,29 +21,26 @@ def requests_count(request):
                             content_type="application/json")
 
 
-def view_requests(request):
-    requests = Request.objects.filter(priority=1)[:10]
+def priority_requests(request):
+    if request.is_ajax():
+        priority = request.GET['priority']
+        sorting = request.GET['sort']
+        if priority == 'all':
+            requests = Request.objects.order_by(sorting)[:10]
+        elif 0 > int(priority[-1]) > 3:
+            return HttpResponse(json.dumps({'success': 'false'}),
+                                content_type='application/json')
+        else:
+            requests = Request.objects.filter(
+                priority=int(priority[-1])).order_by(sorting)[:10]
+        req_json = [r.as_dict() for r in requests]
+        response_data = {'requests': req_json, 'success': 'true'}
+        return HttpResponse(json.dumps(response_data),
+                            content_type='application/json')
+    requests = Request.objects.all()[:10]
     req_json = [r.as_dict() for r in requests]
     response_data = {'requests': req_json}
     return render(request, 'hello/requests.html', response_data)
-
-
-def priority_requests(request):
-    priority = request.GET['priority']
-    sorting = request.GET['sort']
-    if priority == 'all':
-        requests = Request.objects.order_by(sorting)[:10]
-    elif 0 > int(priority[-1]) > 3:
-        return HttpResponse(json.dumps({'success': 'false'}),
-                            content_type='application/json')
-    else:
-        requests = Request.objects.filter(
-            priority=int(priority[-1])).order_by(sorting)[:10]
-    req_json = [r.as_dict() for r in requests]
-    response_data = {'requests': req_json}
-    if request.is_ajax():
-        return HttpResponse(json.dumps(response_data),
-                            content_type='application/json')
 
 
 def change_priority(request):
